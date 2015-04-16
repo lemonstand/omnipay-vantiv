@@ -1,0 +1,37 @@
+{
+    "name": "lemonstand/omnipay-vantiv",
+    "type": "library",
+    "description": "Vantiv payments driver for the Omnipay payment processing library",
+    "keywords": [
+        "vantiv",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "payments"
+    ],
+    "homepage": "https://github.com/lemonstand/omnipay-vantiv",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LemonStand",
+            "email": "chris@lemonstand.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Vantiv\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0",
+        "litle/payments-sdk": "9.3.*"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    }
+}
