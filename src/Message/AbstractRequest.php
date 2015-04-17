@@ -67,6 +67,30 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * Get HTTP Method.
+     *
+     * This is nearly always POST but can be over-ridden in sub classes.
+     *
+     * @return string
+     */
+    public function getHttpMethod()
+    {
+        return 'POST';
+    }
+
+    /**
+     * Get Content Type.
+     *
+     * This is nearly always 'text/xml; charset=utf-8' but can be over-ridden in sub classes.
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return 'text/xml; charset=utf-8';
+    }
+
+    /**
      * Get API endpoint URL
      *
      * @return string
@@ -76,4 +100,38 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
+    /**
+     * Send data
+     *
+     * @param \SimpleXMLElement $data Data
+     *
+     * @access public
+     * @return RedirectResponse
+     */
+    public function sendData($data)
+    {
+        // don't throw exceptions for 4xx errors
+        $this->httpClient->getEventDispatcher()->addListener(
+            'request.error',
+            function ($event) {
+                if ($event['response']->isClientError()) {
+                    $event->stopPropagation();
+                }
+            }
+        );
+
+        $httpRequest = $this->httpClient->createRequest(
+            $this->getHttpMethod(),
+            $this->getEndpoint(),
+            null,
+            $data->asXML()
+        );
+
+        $httpResponse = $httpRequest
+            ->setHeader('Content-Type', $this->getContentType())
+            ->send()
+            ->xml();
+
+        return $this->response = new Response($this, $httpResponse);
+    }
 }

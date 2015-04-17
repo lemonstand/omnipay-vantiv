@@ -5,7 +5,7 @@ use Omnipay\Common\Message\AbstractResponse;
 /**
  * Vantiv Response
  *
- * This is the response class for all Pin REST requests.
+ * This is the response class for all Vantiv REST requests.
  *
  * @see \Omnipay\Pin\Gateway
  */

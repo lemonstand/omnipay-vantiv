@@ -14,18 +14,13 @@ class Gateway extends AbstractGateway
         return 'Vantiv';
     }
 
-    // public function authorize(array $parameters = array())
-    // {
-    //     return $this->createRequest('\Omnipay\Vantiv\Message\AuthorizeRequest', $parameters);
-    // }
-
-    // public function completeAuthorize(array $parameters = array())
-    // {
-    //     return $this->createRequest('\Omnipay\Vantiv\Message\CompleteAuthorizeRequest', $parameters);
-    // }
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Vantiv\Message\AuthorizeRequest', $parameters);
+    }
 
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Vantiv\Message\SaleTransactionRequest', $parameters);
+        return $this->createRequest('\Omnipay\Vantiv\Message\PurchaseRequest', $parameters);
     }
 }

@@ -5,12 +5,14 @@ use Omnipay\Common\CreditCard;
 /**
  * Netaxept Purchase Request
  */
-class SaleTransactionRequest extends AbstractRequest
+class AuthorizeRequest extends AbstractRequest
 {
     public function getData()
     {
         $this->validate('amount', 'card');
-        $this->getCard()->validate();
+
+        $card = $this->getCard();
+        $card->validate();
 
         $data = new \SimpleXMLElement('<litleOnlineRequest version="8.10" xmlns="http://www.litle.com/schema" />');
         $data->addAttribute('merchantId', $this->getMerchantId());
@@ -26,7 +28,7 @@ class SaleTransactionRequest extends AbstractRequest
         $authorization->addChild('amount', $this->getAmount());
         $authorization->addChild('orderSource', 'ecommerce');
 
-        if ($card = $this->getCard()) {
+        if ($card) {
             $billToAddress = $authorization->addChild('billToAddress');
             $billToAddress->addChild('name', $card->getBillingFirstName());
             $billToAddress->addChild('addressLine1', $card->getBillingAddress1());
@@ -58,27 +60,5 @@ class SaleTransactionRequest extends AbstractRequest
         }
 
         return $data;
-    }
-
-    /**
-     * Send data
-     *
-     * @param \SimpleXMLElement $data Data
-     *
-     * @access public
-     * @return RedirectResponse
-     */
-    public function sendData($data)
-    {
-        $headers = array(
-            'Content-Type'  => 'text/xml; charset=utf-8'
-        );
-
-        $httpResponse = $this->httpClient
-            ->post($this->getEndpoint(), $headers, $data->asXML())
-            //->setAuth($this->getUsername(), $this->getPassword())
-            ->send();
-
-        return $this->createResponse($httpResponse);
     }
 }
