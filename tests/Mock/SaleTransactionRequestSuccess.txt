@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Date: Thu, 16 Apr 2015 23:52:50 GMT
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=utf-8
+Connection: close
+Transfer-Encoding: chunked
+
+<litleOnlineResponse version='9.3' response='0' message='Valid Format' xmlns='http://www.litle.com/schema'><authorizationResponse id='ididid' reportGroup='rtpGrp' customerId='12345'><litleTxnId>161516686798915000</litleTxnId><orderId>1</orderId><response>000</response><responseTime>2015-04-16T19:48:39</responseTime><message>Approved</message><authCode>31186</authCode></authorizationResponse></litleOnlineResponse>
