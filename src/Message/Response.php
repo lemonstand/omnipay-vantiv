@@ -1,7 +1,5 @@
 <?php namespace Omnipay\Vantiv\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
-
 /**
  * Vantiv Response
  *
@@ -9,7 +7,7 @@ use Omnipay\Common\Message\AbstractResponse;
  *
  * @see \Omnipay\Pin\Gateway
  */
-class Response extends AbstractResponse
+class Response extends \Omnipay\Common\Message\AbstractResponse
 {
     /**
      * Check for successful payment

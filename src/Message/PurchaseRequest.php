@@ -1,5 +1,7 @@
 <?php namespace Omnipay\Vantiv\Message;
 
+use Omnipay\Common\CreditCard;
+
 /**
  * Netaxept Purchase Request
  */
@@ -10,7 +12,6 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('amount', 'card');
 
         $card = $this->getCard();
-        $card->validate();
 
         $data = new \SimpleXMLElement('<litleOnlineRequest version="9.03" xmlns="http://www.litle.com/schema" />');
         $data->addAttribute('merchantId', $this->getMerchantId());
@@ -19,17 +20,17 @@ class PurchaseRequest extends AbstractRequest
         $authentication->addChild('user', $this->getUsername());
         $authentication->addChild('password', $this->getPassword());
 
-        $authorization = $data->addChild('authorization');
-        $authorization->addAttribute('id', $this->getTransactionId());
-        $authorization->addAttribute('customerId', $this->getCustomerId());
-        $authorization->addChild('orderId', $this->getOrderId());
+        $sale = $data->addChild('sale');
+        $sale->addAttribute('id', $this->getTransactionId());
+        $sale->addAttribute('customerId', $this->getCustomerId());
+        $sale->addChild('orderId', $this->getOrderId());
 
         // The amount is sent as cents but as a string
-        $authorization->addChild('amount', (string) $this->getAmountInteger());
-        $authorization->addChild('orderSource', 'ecommerce');
+        $sale->addChild('amount', (string) $this->getAmountInteger());
+        $sale->addChild('orderSource', 'ecommerce');
 
         if ($card) {
-            $billToAddress = $authorization->addChild('billToAddress');
+            $billToAddress = $sale->addChild('billToAddress');
             $billToAddress->addChild('name', $card->getBillingFirstName());
             $billToAddress->addChild('addressLine1', $card->getBillingAddress1());
             $billToAddress->addChild('city', $card->getBillingCity());
@@ -39,13 +40,13 @@ class PurchaseRequest extends AbstractRequest
             $billToAddress->addChild('email', $card->getEmail());
             $billToAddress->addChild('phone', $card->getBillingPhone());
 
-            $cc = $billToAddress->addChild('card');
+            $cc = $sale->addChild('card');
 
             $codes = array(
                 CreditCard::BRAND_AMEX        => 'AMEX',
                 CreditCard::BRAND_DANKORT     => 'DANKORT',
                 CreditCard::BRAND_DINERS_CLUB => 'DINERS',
-                CreditCard::BRAND_DISCOVER    => 'DISCOVER',
+                CreditCard::BRAND_DISCOVER    => 'DI',
                 CreditCard::BRAND_JCB         => 'JCB',
                 CreditCard::BRAND_LASER       => 'LASER',
                 CreditCard::BRAND_MAESTRO     => 'MAESTRO',

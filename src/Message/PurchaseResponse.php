@@ -1,7 +1,5 @@
 <?php namespace Omnipay\Vantiv\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
-
 class PurchaseResponse extends Response
 {
     /**

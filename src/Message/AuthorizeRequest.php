@@ -1,5 +1,7 @@
 <?php namespace Omnipay\Vantiv\Message;
 
+use Omnipay\Common\CreditCard;
+
 /**
  * Netaxept Purchase Request
  */
@@ -10,7 +12,6 @@ class AuthorizeRequest extends AbstractRequest
         $this->validate('amount', 'card');
 
         $card = $this->getCard();
-        $card->validate();
 
         $data = new \SimpleXMLElement('<litleOnlineRequest version="9.03" xmlns="http://www.litle.com/schema" />');
         $data->addAttribute('merchantId', $this->getMerchantId());
@@ -39,13 +40,13 @@ class AuthorizeRequest extends AbstractRequest
             $billToAddress->addChild('email', $card->getEmail());
             $billToAddress->addChild('phone', $card->getBillingPhone());
 
-            $cc = $billToAddress->addChild('card');
+            $cc = $authorization->addChild('card');
 
             $codes = array(
                 CreditCard::BRAND_AMEX        => 'AMEX',
                 CreditCard::BRAND_DANKORT     => 'DANKORT',
                 CreditCard::BRAND_DINERS_CLUB => 'DINERS',
-                CreditCard::BRAND_DISCOVER    => 'DISCOVER',
+                CreditCard::BRAND_DISCOVER    => 'DI',
                 CreditCard::BRAND_JCB         => 'JCB',
                 CreditCard::BRAND_LASER       => 'LASER',
                 CreditCard::BRAND_MAESTRO     => 'MAESTRO',
@@ -61,7 +62,6 @@ class AuthorizeRequest extends AbstractRequest
 
         return $data;
     }
-
 
     protected function createResponse($response)
     {
