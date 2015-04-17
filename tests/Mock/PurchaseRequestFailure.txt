@@ -1,9 +1,8 @@
 HTTP/1.1 200 OK
-Server: nginx
-Date: Thu, 26 Sep 2013 21:13:08 GMT
-Content-Type: application/xml
-Content-Length: 273
+Date: Thu, 16 Apr 2015 23:52:50 GMT
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=utf-8
 Connection: close
+Transfer-Encoding: chunked
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<errors><error><code>8015</code><message>Amount is out of range.</message><field>amount</field></error><su><errors><error><code>8015</code><message>Amount is out of range.</message><field>amount</field></error></errors></su></errors>
+<litleOnlineResponse version='9.3' response='1' message='Valid Format' xmlns='http://www.litle.com/schema'></litleOnlineResponse>

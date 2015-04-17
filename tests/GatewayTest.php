@@ -23,21 +23,4 @@ class GatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\Vantiv\Message\PurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
     }
-
-    public function testPurchaseSuccess()
-    {
-        $this->setMockHttpResponse('PurchaseRequestSuccess.txt');
-        $options = array(
-            'transactionId' => '55742-165747-52441DAF-3596'
-        );
-
-        $response = $this->gateway->purchase(array_merge($this->options, $options))->send();
-        $this->assertInstanceOf('\Omnipay\Vantiv\Message\Response', $response);
-        $this->assertTrue($response->isSuccessful());
-    }
-
-    public function testPurchaseFailure()
-    {
-        $this->assertTrue(true);
-    }
 }
