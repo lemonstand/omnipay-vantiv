@@ -11,16 +11,20 @@ use Omnipay\Common\Message\AbstractResponse;
  */
 class Response extends AbstractResponse
 {
+    /**
+     * Check for successful payment
+     *
+     * This is used after createCard to get the credit card token to be
+     *
+     * @return string
+     */
     public function isSuccessful()
     {
-        return !isset($this->data['error']);
-    }
-
-    public function getTransactionReference()
-    {
-        if (isset($this->data['response']['token'])) {
-            return $this->data['response']['token'];
+        if (isset($this->data->attributes()->response)) {
+            return ((string) $this->data->attributes()->response === "0");
         }
+
+        return false;
     }
 
     /**
@@ -31,38 +35,21 @@ class Response extends AbstractResponse
      *
      * @return string
      */
-    public function getCardToken()
+    public function getResponseCode()
     {
-        if (isset($this->data['response']['token'])) {
-            return $this->data['response']['token'];
-        }
-    }
-
-    /**
-     * Get Customer Token
-     *
-     * This is used after createCustomer to get the customer token to be
-     * used in future transactions.
-     *
-     * @return string
-     */
-    public function getCustomerToken()
-    {
-        if (isset($this->data['response']['token'])) {
-            return $this->data['response']['token'];
+        if (isset($this->data->attributes()->response)) {
+            return (string) $this->data->attributes()->response;
         }
     }
 
     public function getMessage()
     {
         if ($this->isSuccessful()) {
-            if (isset($this->data['response']['status_message'])) {
-                return $this->data['response']['status_message'];
-            } else {
-                return true;
-            }
+
         } else {
-            return $this->data['error_description'];
+            if (isset($this->data->attributes()->message)) {
+                return (string) $this->data->attributes()->message;
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
 <?php namespace Omnipay\Vantiv\Message;
 
-use Omnipay\Common\CreditCard;
-
 /**
  * Netaxept Purchase Request
  */
@@ -14,7 +12,7 @@ class AuthorizeRequest extends AbstractRequest
         $card = $this->getCard();
         $card->validate();
 
-        $data = new \SimpleXMLElement('<litleOnlineRequest version="8.10" xmlns="http://www.litle.com/schema" />');
+        $data = new \SimpleXMLElement('<litleOnlineRequest version="9.03" xmlns="http://www.litle.com/schema" />');
         $data->addAttribute('merchantId', $this->getMerchantId());
 
         $authentication = $data->addChild('authentication');
@@ -25,7 +23,9 @@ class AuthorizeRequest extends AbstractRequest
         $authorization->addAttribute('id', $this->getTransactionId());
         $authorization->addAttribute('customerId', $this->getCustomerId());
         $authorization->addChild('orderId', $this->getOrderId());
-        $authorization->addChild('amount', $this->getAmount());
+
+        // The amount is sent as cents but as a string
+        $authorization->addChild('amount', (string) $this->getAmountInteger());
         $authorization->addChild('orderSource', 'ecommerce');
 
         if ($card) {
@@ -50,7 +50,7 @@ class AuthorizeRequest extends AbstractRequest
                 CreditCard::BRAND_LASER       => 'LASER',
                 CreditCard::BRAND_MAESTRO     => 'MAESTRO',
                 CreditCard::BRAND_MASTERCARD  => 'MC',
-                CreditCard::BRAND_VISA        => 'VISA'
+                CreditCard::BRAND_VISA        => 'VI'
             );
             $cc->addChild('type', $codes[$card->getBrand()]);
 
@@ -60,5 +60,11 @@ class AuthorizeRequest extends AbstractRequest
         }
 
         return $data;
+    }
+
+
+    protected function createResponse($response)
+    {
+        return $this->response = new AuthorizeResponse($this, $response);
     }
 }
