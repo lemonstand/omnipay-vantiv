@@ -10,44 +10,52 @@
 class Response extends \Omnipay\Common\Message\AbstractResponse
 {
     /**
-     * Check for successful payment
+     * Check for successful response
      *
-     * This is used after createCard to get the credit card token to be
-     *
-     * @return string
+     * @return bool
      */
     public function isSuccessful()
     {
-        if (isset($this->data->attributes()->response)) {
-            return ((string) $this->data->attributes()->response === "0");
+        $element = $this->element;
+
+        if (isset($this->data->$element->message)) {
+            return ((string) $this->data->$element->message === "Approved");
         }
 
         return false;
     }
 
     /**
-     * Get Card Token
+     * Get the response code
      *
-     * This is used after createCard to get the credit card token to be
-     * used in future transactions.
+     * If the transaction is successful the code is embedded in the body,
+     * if not, then it is on the root element.
      *
      * @return string
      */
     public function getResponseCode()
     {
-        if (isset($this->data->attributes()->response)) {
+        $element = $this->element;
+
+        if (isset($this->data->$element->response)) {
+            return ((string) $this->data->$element->response);
+        } else if (isset($this->data->attributes()->response)) {
             return (string) $this->data->attributes()->response;
+        } else {
+            return null;
         }
     }
 
     public function getMessage()
     {
-        if ($this->isSuccessful()) {
+        $element = $this->element;
 
+        if (isset($this->data->$element->message)) {
+            return (string) $this->data->$element->message;
+        } else if (isset($this->data->attributes()->message)) {
+            return (string) $this->data->attributes()->message;
         } else {
-            if (isset($this->data->attributes()->message)) {
-                return (string) $this->data->attributes()->message;
-            }
+            return null;
         }
     }
 }

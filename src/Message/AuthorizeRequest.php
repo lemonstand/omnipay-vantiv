@@ -24,8 +24,6 @@ class AuthorizeRequest extends AbstractRequest
         $authorization->addAttribute('id', $this->getTransactionId());
         $authorization->addAttribute('customerId', $this->getCustomerId());
         $authorization->addChild('orderId', $this->getOrderId());
-
-        // The amount is sent as cents but as a string
         $authorization->addChild('amount', (string) $this->getAmountInteger());
         $authorization->addChild('orderSource', 'ecommerce');
 
