@@ -14,7 +14,13 @@ class GatewayTest extends GatewayTestCase
             'card'      => $this->getValidCard(),
             'currency'  => 'USD'
         );
-        $this->gateway->setTestMode(true);
+    }
+
+    public function testAuthorize()
+    {
+        $request = $this->gateway->authorize($this->options);
+        $this->assertInstanceOf('Omnipay\Vantiv\Message\AuthorizeRequest', $request);
+        $this->assertSame('10.00', $request->getAmount());
     }
 
     public function testPurchase()

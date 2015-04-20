@@ -49,7 +49,7 @@ class PurchaseRequestTest extends TestCase
         $response = $this->request->send();
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getMessage());
+        $this->assertSame('Approved', $response->getMessage());
     }
 
     public function testSendError()
