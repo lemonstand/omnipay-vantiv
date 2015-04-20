@@ -24,7 +24,6 @@ class PurchaseRequest extends AbstractRequest
         $data = new \SimpleXMLElement('<litleOnlineRequest xmlns="http://www.litle.com/schema" />');
         $data->addAttribute('version', $this->getVersion());
         $data->addAttribute('merchantId', $this->getMerchantId());
-        $data->addAttribute('reportGroup', $this->getReportGroup());
 
         $authentication = $data->addChild('authentication');
         $authentication->addChild('user', $this->getUsername());
@@ -33,6 +32,7 @@ class PurchaseRequest extends AbstractRequest
         $sale = $data->addChild('sale');
         $sale->addAttribute('id', $this->getTransactionId());
         $sale->addAttribute('customerId', $this->getCustomerId());
+        $sale->addAttribute('reportGroup', $this->getReportGroup());
         $sale->addChild('orderId', $this->getOrderId());
 
         // The amount is sent as cents but as a string
