@@ -74,6 +74,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->version;
     }
 
+    public function setVersion($value)
+    {
+        return $this->setParameter('version', $value);
+    }
+
     /**
      * Get HTTP Method.
      *

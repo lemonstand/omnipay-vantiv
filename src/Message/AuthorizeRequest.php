@@ -1,7 +1,5 @@
 <?php namespace Omnipay\Vantiv\Message;
 
-use Omnipay\Common\CreditCard;
-
 /**
  * Netaxept Purchase Request
  */
@@ -13,7 +11,8 @@ class AuthorizeRequest extends AbstractRequest
 
         $card = $this->getCard();
 
-        $data = new \SimpleXMLElement('<litleOnlineRequest version="9.03" xmlns="http://www.litle.com/schema" />');
+        $data = new \SimpleXMLElement('<litleOnlineRequest xmlns="http://www.litle.com/schema" />');
+        $data->addAttribute('version', $this->getVersion());
         $data->addAttribute('merchantId', $this->getMerchantId());
 
         $authentication = $data->addChild('authentication');
