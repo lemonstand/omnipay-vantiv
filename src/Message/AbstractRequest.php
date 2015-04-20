@@ -1,5 +1,7 @@
 <?php namespace Omnipay\Vantiv\Message;
 
+use Omnipay\Common\CreditCard;
+
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $version = '9.3';
@@ -27,16 +29,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('merchantId', $value);
     }
 
-    public function getCustomerId()
-    {
-        return $this->getParameter('customerId');
-    }
-
-    public function setCustomerId($value)
-    {
-        return $this->setParameter('customerId', $value);
-    }
-
     public function getUsername()
     {
         return $this->getParameter('username');
@@ -55,6 +47,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setPassword($value)
     {
         return $this->setParameter('password', $value);
+    }
+
+    public function getCustomerId()
+    {
+        return $this->getParameter('customerId');
+    }
+
+    public function setCustomerId($value)
+    {
+        return $this->setParameter('customerId', $value);
     }
 
     public function getOrderId()
@@ -94,6 +96,20 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function getContentType()
     {
         return 'text/xml; charset=utf-8';
+    }
+
+    public function getCreditType($brand)
+    {
+        $codes = array(
+            CreditCard::BRAND_AMEX        => 'AX',
+            CreditCard::BRAND_DINERS_CLUB => 'DC',
+            CreditCard::BRAND_DISCOVER    => 'DI',
+            CreditCard::BRAND_JCB         => 'JC',
+            CreditCard::BRAND_MASTERCARD  => 'MC',
+            CreditCard::BRAND_VISA        => 'VI'
+        );
+
+        return $codes[$brand];
     }
 
     /**
