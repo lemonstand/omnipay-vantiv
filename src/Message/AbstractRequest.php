@@ -4,7 +4,7 @@ use Omnipay\Common\CreditCard;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    protected $version = '9.3';
+    protected $version = '9.4';
     /**
      * Test Endpoint URL
      *

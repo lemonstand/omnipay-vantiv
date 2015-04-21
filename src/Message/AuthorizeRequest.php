@@ -28,7 +28,7 @@ class AuthorizeRequest extends AbstractRequest
 
         if ($card) {
             $billToAddress = $authorization->addChild('billToAddress');
-            $billToAddress->addChild('name', $card->getBillingFirstName());
+            $billToAddress->addChild('name', $card->getBillingName());
             $billToAddress->addChild('addressLine1', $card->getBillingAddress1());
             $billToAddress->addChild('city', $card->getBillingCity());
             $billToAddress->addChild('state', $card->getBillingState());
@@ -40,7 +40,7 @@ class AuthorizeRequest extends AbstractRequest
             $cc = $authorization->addChild('card');
             $cc->addChild('type', $this->getCreditType($card->getBrand()));
             $cc->addChild('number', $card->getNumber());
-            $cc->addChild('expDate', $card->getExpiryDate('m') . $card->getExpiryDate('Y'));
+            $cc->addChild('expDate', $card->getExpiryDate('m') . $card->getExpiryDate('y'));
             $cc->addChild('cardValidationNum', $card->getCvv());
         }
 

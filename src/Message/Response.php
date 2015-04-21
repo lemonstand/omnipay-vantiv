@@ -25,6 +25,40 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
         return false;
     }
 
+
+    public function getTransactionId()
+    {
+        $element = $this->element;
+
+        if (isset($this->data->$element->litleTxnId)) {
+            return ((string) $this->data->$element->litleTxnId);
+        }
+
+        return null;
+    }
+
+    public function getOrderId()
+    {
+        $element = $this->element;
+
+        if (isset($this->data->$element->orderId)) {
+            return ((string) $this->data->$element->orderId);
+        }
+
+        return null;
+    }
+
+    public function getAuthCode()
+    {
+        $element = $this->element;
+
+        if (isset($this->data->$element->authCode)) {
+            return ((string) $this->data->$element->authCode);
+        } else {
+            return null;
+        }
+    }
+    
     /**
      * Get the response code
      *
