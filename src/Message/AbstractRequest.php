@@ -13,11 +13,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $testEndpoint = 'https://www.testlitle.com/sandbox/communicator/online';
 
     /**
-     * Live Endpoint URL
+     * Live Endpoint URL needs to be set on init
      *
      * @var string URL
      */
-    protected $liveEndpoint = 'https://www.litle.com/communicator/online';
+    protected $liveEndpoint;
 
     public function getMerchantId()
     {
@@ -49,6 +49,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('password', $value);
     }
 
+    public function getReportGroup()
+    {
+        return $this->getParameter('reportGroup');
+    }
+
+    public function setReportGroup($value)
+    {
+        return $this->setParameter('reportGroup', $value);
+    }
+    
     public function getCustomerId()
     {
         return $this->getParameter('customerId');
@@ -76,7 +86,27 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function setVersion($value)
     {
-        return $this->setParameter('version', $value);
+        return $this->version = $value;
+    }
+
+    public function getTestEndpoint()
+    {
+        return $this->testEndpoint;
+    }
+
+    public function setTestEndpoint($value)
+    {
+        $this->testEndpoint = $value;
+    }
+
+    public function getLiveEndpoint()
+    {
+        return $this->liveEndpoint;
+    }
+
+    public function setLiveEndpoint($value)
+    {
+        $this->liveEndpoint = $value;
     }
 
     /**
@@ -114,7 +144,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             CreditCard::BRAND_VISA        => 'VI'
         );
 
-        return $codes[$brand];
+        if (isset($codes[$brand])) {
+            return $codes[$brand];
+        } else {
+            throw new \Exception('Card not supported');
+        }
     }
 
     /**

@@ -19,7 +19,7 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
         $element = $this->element;
 
         if (isset($this->data->$element->message)) {
-            return ((string) $this->data->$element->message === "Approved");
+            return ($this->getMessage() === 'Approved' && $this->getResponseCode() === '000');
         }
 
         return false;
@@ -91,5 +91,27 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
         } else {
             return null;
         }
+    }
+
+    public function getAvsResult()
+    {
+        $element = $this->element;
+
+        if (isset($this->data->$element->litleTxnId->fraudResult->avsResult)) {
+            return ((string) $this->data->$element->litleTxnId->fraudResult->avsResult);
+        }
+
+        return null;
+    }
+
+    public function getCardValidationResult()
+    {
+        $element = $this->element;
+
+        if (isset($this->data->$element->litleTxnId->fraudResult->cardValidationResult)) {
+            return ((string) $this->data->$element->litleTxnId->fraudResult->cardValidationResult);
+        }
+
+        return null;
     }
 }

@@ -44,6 +44,26 @@ class Gateway extends AbstractGateway
         return $this->setParameter('password', $value);
     }
     
+    public function getTestEndpoint()
+    {
+        return $this->getParameter('testEndpoint');
+    }
+
+    public function setTestEndpoint($value)
+    {
+        return $this->setParameter('testEndpoint', $value);
+    }
+
+    public function getLiveEndpoint()
+    {
+        return $this->getParameter('liveEndpoint');
+    }
+
+    public function setLiveEndpoint($value)
+    {
+        return $this->setParameter('liveEndpoint', $value);
+    }
+
     public function authorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Vantiv\Message\AuthorizeRequest', $parameters);

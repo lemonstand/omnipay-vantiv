@@ -1,7 +1,7 @@
 <?php namespace Omnipay\Vantiv\Message;
 
 /**
- * Netaxept Purchase Request
+ * Vantiv Authorize Request
  */
 class AuthorizeRequest extends AbstractRequest
 {
@@ -22,6 +22,7 @@ class AuthorizeRequest extends AbstractRequest
         $authorization = $data->addChild('authorization');
         $authorization->addAttribute('id', $this->getTransactionId());
         $authorization->addAttribute('customerId', $this->getCustomerId());
+        $authorization->addAttribute('reportGroup', $this->getReportGroup());
         $authorization->addChild('orderId', $this->getOrderId());
         $authorization->addChild('amount', (string) $this->getAmountInteger());
         $authorization->addChild('orderSource', 'ecommerce');

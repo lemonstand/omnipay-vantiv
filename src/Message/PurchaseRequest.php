@@ -5,16 +5,8 @@
  */
 class PurchaseRequest extends AbstractRequest
 {
-    public function getReportGroup()
-    {
-        return $this->getParameter('reportGroup');
-    }
 
-    public function setReportGroup($value)
-    {
-        return $this->setParameter('reportGroup', $value);
-    }
-
+    // FIXME: should extend the authorize request
     public function getData()
     {
         $this->validate('amount', 'card');
