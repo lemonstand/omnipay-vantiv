@@ -5,7 +5,6 @@
  */
 class PurchaseRequest extends AbstractRequest
 {
-
     // FIXME: should extend the authorize request
     public function getData()
     {
@@ -27,7 +26,7 @@ class PurchaseRequest extends AbstractRequest
         $sale->addAttribute('reportGroup', $this->getReportGroup());
         $sale->addChild('orderId', $this->getOrderId());
 
-        // The amount is sent as cents but as a string
+        // The amount is sent as cents
         $sale->addChild('amount', (string) $this->getAmountInteger());
         $sale->addChild('orderSource', 'ecommerce');
 

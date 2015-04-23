@@ -44,24 +44,14 @@ class Gateway extends AbstractGateway
         return $this->setParameter('password', $value);
     }
     
-    public function getTestEndpoint()
+    public function getPreLiveMode()
     {
-        return $this->getParameter('testEndpoint');
+        return $this->getParameter('preLiveMode');
     }
 
-    public function setTestEndpoint($value)
+    public function setPreLiveMode($value)
     {
-        return $this->setParameter('testEndpoint', $value);
-    }
-
-    public function getLiveEndpoint()
-    {
-        return $this->getParameter('liveEndpoint');
-    }
-
-    public function setLiveEndpoint($value)
-    {
-        return $this->setParameter('liveEndpoint', $value);
+        return $this->setParameter('preLiveMode', $value);
     }
 
     public function authorize(array $parameters = array())

@@ -5,6 +5,7 @@ use Omnipay\Common\CreditCard;
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     protected $version = '9.4';
+
     /**
      * Test Endpoint URL
      *
@@ -13,11 +14,18 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $testEndpoint = 'https://www.testlitle.com/sandbox/communicator/online';
 
     /**
-     * Live Endpoint URL needs to be set on init
+     * Pre-Live Endpoint URL
      *
      * @var string URL
      */
-    protected $liveEndpoint;
+    protected $preLiveEndpoint = 'https://transact-prelive.litle.com/vap/communicator/online';
+
+    /**
+     * Live Endpoint URL
+     *
+     * @var string URL
+     */
+    protected $liveEndpoint = 'https://transact.litle.com/vap/communicator/online';
 
     public function getMerchantId()
     {
@@ -84,19 +92,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->version;
     }
 
-    public function setVersion($value)
-    {
-        return $this->version = $value;
-    }
-
     public function getTestEndpoint()
     {
         return $this->testEndpoint;
     }
 
-    public function setTestEndpoint($value)
+    public function getPreLiveEndpoint()
     {
-        $this->testEndpoint = $value;
+        return $this->preLiveEndpoint;
     }
 
     public function getLiveEndpoint()
@@ -104,13 +107,37 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->liveEndpoint;
     }
 
-    public function setLiveEndpoint($value)
+    public function getPreLiveMode()
     {
-        $this->liveEndpoint = $value;
+        return $this->getParameter('preLiveMode');
+    }
+
+    public function setPreLiveMode($value)
+    {
+        return $this->setParameter('preLiveMode', $value);
     }
 
     /**
-     * Get HTTP Method.
+     * Get API endpoint URL
+     *
+     * If test mode and pre-live mode are both set, then
+     * pre-live mode will take precedence.
+     *
+     * @return string
+     */
+    protected function getEndpoint()
+    {
+        if ($this->getPreLiveMode()) {
+            return $this->getPreLiveEndpoint();
+        } elseif ($this->getTestMode()) {
+            return $this->getTestEndpoint();
+        } else {
+            return $this->getLiveEndpoint();
+        }
+    }
+
+    /**
+     * Get HTTP Method
      *
      * This is nearly always POST but can be over-ridden in sub classes.
      *
@@ -122,7 +149,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Get Content Type.
+     * Get Content Type
      *
      * This is nearly always 'text/xml; charset=utf-8' but can be over-ridden in sub classes.
      *
@@ -133,6 +160,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return 'text/xml; charset=utf-8';
     }
 
+    /**
+     * Get Credit Type
+     *
+     * Match the brand up to the supported card format, throwd exception on unsupported card.
+     *
+     * @return string
+     */
     public function getCreditType($brand)
     {
         $codes = array(
@@ -147,22 +181,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         if (isset($codes[$brand])) {
             return $codes[$brand];
         } else {
-            throw new \Exception('Card not supported');
+            throw new \Exception('Card not supported.');
         }
     }
 
     /**
-     * Get API endpoint URL
-     *
-     * @return string
-     */
-    protected function getEndpoint()
-    {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
-    }
-
-    /**
-     * Send data
+     * Send Data
      *
      * @param \SimpleXMLElement $data Data
      *
