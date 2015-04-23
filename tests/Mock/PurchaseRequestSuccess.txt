@@ -5,4 +5,4 @@ Content-Type: text/xml;charset=utf-8
 Connection: close
 Transfer-Encoding: chunked
 
-<litleOnlineResponse version='9.3' response='0' message='Valid Format' xmlns='http://www.litle.com/schema'><saleResponse id='' reportGroup='123456' customerId='a@email.com'><litleTxnId>372127157386039000</litleTxnId><orderId>110299471</orderId><response>000</response><responseTime>2015-04-17T17:07:21</responseTime><message>Approved</message><authCode>72555</authCode></saleResponse></litleOnlineResponse>
+<litleOnlineResponse version='9.4' response='0' message='Valid Format' xmlns='http://www.litle.com/schema'><saleResponse id='' reportGroup='123456' customerId='a@email.com'><litleTxnId>372127157386039000</litleTxnId><orderId>110299471</orderId><response>000</response><responseTime>2015-04-17T17:07:21</responseTime><message>Approved</message><authCode>72555</authCode></saleResponse></litleOnlineResponse>

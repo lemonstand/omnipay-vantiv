@@ -5,4 +5,4 @@ Content-Type: text/xml;charset=utf-8
 Connection: close
 Transfer-Encoding: chunked
 
-<litleOnlineResponse version='9.3' response='0' message='Valid Format' xmlns='http://www.litle.com/schema'><authorizationResponse id='ididid' reportGroup='rtpGrp' customerId='12345'><litleTxnId>205448564883991110</litleTxnId><orderId>1</orderId><response>110</response><responseTime>2015-04-17T16:49:22</responseTime><message>Insufficient Funds</message></authorizationResponse></litleOnlineResponse>
+<litleOnlineResponse version='9.4' response='0' message='Valid Format' xmlns='http://www.litle.com/schema'><authorizationResponse id='ididid' reportGroup='rtpGrp' customerId='12345'><litleTxnId>205448564883991110</litleTxnId><orderId>1</orderId><response>110</response><responseTime>2015-04-17T16:49:22</responseTime><message>Insufficient Funds</message></authorizationResponse></litleOnlineResponse>
