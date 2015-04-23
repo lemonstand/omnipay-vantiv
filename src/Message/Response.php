@@ -73,7 +73,7 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
 
         if (isset($this->data->$element->response)) {
             return ((string) $this->data->$element->response);
-        } else if (isset($this->data->attributes()->response)) {
+        } elseif (isset($this->data->attributes()->response)) {
             return (string) $this->data->attributes()->response;
         } else {
             return null;
@@ -86,7 +86,7 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
 
         if (isset($this->data->$element->message)) {
             return (string) $this->data->$element->message;
-        } else if (isset($this->data->attributes()->message)) {
+        } elseif (isset($this->data->attributes()->message)) {
             return (string) $this->data->attributes()->message;
         } else {
             return null;
