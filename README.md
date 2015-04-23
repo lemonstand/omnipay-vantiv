@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/lemonstand/omnipay-vantiv.svg)](https://travis-ci.org/lemonstand/omnipay-vantiv) [![Latest Stable Version](https://poser.pugx.org/lemonstand/omnipay-vantiv/v/stable.svg)](https://packagist.org/packages/lemonstand/omnipay-vantiv) [![Total Downloads](https://poser.pugx.org/lemonstand/omnipay-vantiv/downloads)](https://packagist.org/packages/lemonstand/omnipay-vantiv) [![Latest Unstable Version](https://poser.pugx.org/lemonstand/omnipay-vantiv/v/unstable.svg)](https://packagist.org/packages/lemonstand/omnipay-vantiv)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements vantiv Payments support for Omnipay. Please see here: file:///Users/zieba/Downloads/Vantiv_LitleXML_Reference_Guide_XML9.4_V1.8.pdf for the full Vantiv documentation.
+processing library for PHP 5.3+. This package implements vantiv Payments support for Omnipay. Please see the full [Vantiv documentation](https://github.com/LitleCo/litle-xml/blob/master/reference_guides/Vantiv_LitleXML_Reference_Guide_XML9.4_V1.7.pdf) for more information.
 
 ## Installation
 
