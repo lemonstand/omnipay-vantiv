@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/lemonstand/omnipay-vantiv.svg)](https://travis-ci.org/lemonstand/omnipay-vantiv) [![Latest Stable Version](https://poser.pugx.org/lemonstand/omnipay-vantiv/v/stable.svg)](https://packagist.org/packages/lemonstand/omnipay-vantiv) [![Total Downloads](https://poser.pugx.org/lemonstand/omnipay-vantiv/downloads.svg)](https://packagist.org/packages/lemonstand/omnipay-vantiv) [![Latest Unstable Version](https://poser.pugx.org/lemonstand/omnipay-vantiv/v/unstable.svg)](https://packagist.org/packages/lemonstand/omnipay-vantiv)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements vantiv Payments support for Omnipay.
+processing library for PHP 5.3+. This package implements vantiv Payments support for Omnipay. Please see here: file:///Users/zieba/Downloads/Vantiv_LitleXML_Reference_Guide_XML9.4_V1.8.pdf for the full Vantiv documentation.
 
 ## Installation
 
@@ -24,12 +24,49 @@ And run composer to update your dependencies:
 
     $ curl -s http://getcomposer.org/installer | php
     $ php composer.phar update
-
+    
 ## Basic Usage
 
 The following gateways are provided by this package:
 
-* Vantiv
+* Purchase (Sale)
+* Authorize
+
+```php
+	$gateway = Omnipay::create('Vantiv');
+	$gateway->setMerchantId($merchantId);
+	$gateway->setUsername($username);
+	$gateway->setPassword($password);
+
+	// Test mode hits the sandbox endpoint, and pre-live mode hits that preLive endpoint
+	// If both are set the pre-live endpoint takes precedence
+	$gateway->setTestMode($testMode);
+	$gateway->setPreLiveMode($preLiveMode);
+
+    try {
+        $params = [
+            'transactionId' => $transactionId,
+            'orderId'       => $orderId,
+            'customerId'    => $customerId,
+            'reportGroup'   => $reportGroup,
+            'amount'        => $amount,
+            'currency'      => $currency,
+            'card'          => $validCard,
+            'description'   => $description
+        ];
+
+        $response = $gateway->purchase($params)->send();
+
+        if ($response->isSuccessful()) {
+            // successfull
+        } else {
+            throw new ApplicationException($response->getMessage());
+        }
+    } catch (ApplicationException $e) {
+        throw new ApplicationException($e->getMessage());
+    }
+
+```
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
