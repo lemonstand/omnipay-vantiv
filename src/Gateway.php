@@ -14,6 +14,15 @@ class Gateway extends AbstractGateway
         return 'Vantiv';
     }
 
+    public function getDefaultParameters()
+    {
+        return array(
+            'merchantId' => '',
+            'username' => '',
+            'password' => '',
+        );
+    }
+
     public function getMerchantId()
     {
         return $this->getParameter('merchantId');
@@ -54,11 +63,19 @@ class Gateway extends AbstractGateway
         return $this->setParameter('preLiveMode', $value);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Vantiv\Message\AuthorizeRequest
+     */
     public function authorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Vantiv\Message\AuthorizeRequest', $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Vantiv\Message\PurchaseRequest
+     */
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Vantiv\Message\PurchaseRequest', $parameters);
