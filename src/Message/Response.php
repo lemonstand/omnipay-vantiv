@@ -26,7 +26,7 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
     }
 
 
-    public function getTransactionId()
+    public function getTransactionReference()
     {
         $element = $this->element;
 
