@@ -10,6 +10,7 @@ class AuthorizeRequest extends AbstractRequest
         $this->validate('amount', 'card');
 
         $card = $this->getCard();
+        $token = $this->getToken();
 
         $data = new \SimpleXMLElement('<litleOnlineRequest xmlns="http://www.litle.com/schema" />');
         $data->addAttribute('version', $this->getVersion());
@@ -43,6 +44,11 @@ class AuthorizeRequest extends AbstractRequest
             $cc->addChild('number', $card->getNumber());
             $cc->addChild('expDate', $card->getExpiryDate('m') . $card->getExpiryDate('y'));
             $cc->addChild('cardValidationNum', $card->getCvv());
+        }
+
+        if ($token) {
+            $tokenElement = $authorization->addChild('token');
+            $tokenElement->addChild('litleToken', $token);
         }
 
         return $data;
