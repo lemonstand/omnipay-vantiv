@@ -5,10 +5,9 @@
  */
 class PurchaseRequest extends AuthorizeRequest
 {
-    protected $transactionType = 'sale';
-
     public function getData()
     {
+        $this->transactionType = 'sale';
         return parent::getData();
     }
 
