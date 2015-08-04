@@ -1,16 +1,25 @@
 <?php namespace Omnipay\Vantiv\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+
 /**
  * Vantiv Authorize Request
  */
 class AuthorizeRequest extends AbstractRequest
 {
+    protected $transactionType = 'authorization';
+
     public function getData()
     {
-        $this->validate('amount', 'card');
+        $this->validate('amount');
 
         $card = $this->getCard();
         $token = $this->getToken();
+
+        if (!$card && !$token) {
+            $param  = (!$card) ? 'card' : 'token';
+            throw new InvalidRequestException("The $param parameter is required");
+        }
 
         $data = new \SimpleXMLElement('<litleOnlineRequest xmlns="http://www.litle.com/schema" />');
         $data->addAttribute('version', $this->getVersion());
@@ -20,16 +29,18 @@ class AuthorizeRequest extends AbstractRequest
         $authentication->addChild('user', $this->getUsername());
         $authentication->addChild('password', $this->getPassword());
 
-        $authorization = $data->addChild('authorization');
-        $authorization->addAttribute('id', $this->getTransactionId());
-        $authorization->addAttribute('customerId', $this->getCustomerId());
-        $authorization->addAttribute('reportGroup', $this->getReportGroup());
-        $authorization->addChild('orderId', $this->getOrderId());
-        $authorization->addChild('amount', (string) $this->getAmountInteger());
-        $authorization->addChild('orderSource', 'ecommerce');
+        $transaction = $data->addChild($this->transactionType);
+        $transaction->addAttribute('id', $this->getTransactionId());
+        $transaction->addAttribute('customerId', $this->getCustomerId());
+        $transaction->addAttribute('reportGroup', $this->getReportGroup());
+        $transaction->addChild('orderId', $this->getOrderId());
+
+        // The amount is sent as cents
+        $transaction->addChild('amount', (string) $this->getAmountInteger());
+        $transaction->addChild('orderSource', 'ecommerce');
 
         if ($card) {
-            $billToAddress = $authorization->addChild('billToAddress');
+            $billToAddress = $transaction->addChild('billToAddress');
             $billToAddress->addChild('name', $card->getBillingName());
             $billToAddress->addChild('addressLine1', $card->getBillingAddress1());
             $billToAddress->addChild('city', $card->getBillingCity());
@@ -39,7 +50,7 @@ class AuthorizeRequest extends AbstractRequest
             $billToAddress->addChild('email', $card->getEmail());
             $billToAddress->addChild('phone', $card->getBillingPhone());
 
-            $cc = $authorization->addChild('card');
+            $cc = $transaction->addChild('card');
             $cc->addChild('type', $this->getCreditType($card->getBrand()));
             $cc->addChild('number', $card->getNumber());
             $cc->addChild('expDate', $card->getExpiryDate('m') . $card->getExpiryDate('y'));
@@ -47,7 +58,7 @@ class AuthorizeRequest extends AbstractRequest
         }
 
         if ($token) {
-            $tokenElement = $authorization->addChild('token');
+            $tokenElement = $transaction->addChild('token');
             $tokenElement->addChild('litleToken', $token);
         }
 
