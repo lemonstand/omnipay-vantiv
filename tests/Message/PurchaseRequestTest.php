@@ -19,6 +19,18 @@ class PurchaseRequestTest extends TestCase
         );
     }
 
+    public function testPreLiveMode()
+    {
+        $this->assertSame($this->request, $this->request->setPreLiveMode(true));
+        $this->assertSame(true, $this->request->getPreLiveMode());
+    }
+
+    public function testReportGroup()
+    {
+        $this->assertSame($this->request, $this->request->setReportGroup('test-group-1'));
+        $this->assertSame('test-group-1', $this->request->getReportGroup());
+    }
+
     public function testGetData()
     {
         $data = $this->request->getData();

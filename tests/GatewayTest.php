@@ -16,6 +16,12 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
+    public function testPreLiveMode()
+    {
+        $this->assertSame($this->gateway, $this->gateway->setPreLiveMode(true));
+        $this->assertSame(true, $this->gateway->getPreLiveMode());
+    }
+
     public function testAuthorize()
     {
         $request = $this->gateway->authorize($this->options);

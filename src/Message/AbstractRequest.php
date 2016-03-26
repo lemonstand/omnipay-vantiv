@@ -66,7 +66,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('reportGroup', $value);
     }
-    
+
     public function getCustomerId()
     {
         return $this->getParameter('customerId');
@@ -92,21 +92,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->version;
     }
 
-    public function getTestEndpoint()
-    {
-        return $this->testEndpoint;
-    }
-
-    public function getPreLiveEndpoint()
-    {
-        return $this->preLiveEndpoint;
-    }
-
-    public function getLiveEndpoint()
-    {
-        return $this->liveEndpoint;
-    }
-
     public function getPreLiveMode()
     {
         return $this->getParameter('preLiveMode');
@@ -125,14 +110,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @return string
      */
-    protected function getEndpoint()
+    public function getEndpoint()
     {
         if ($this->getPreLiveMode()) {
-            return $this->getPreLiveEndpoint();
+            return $this->preLiveEndpoint;
         } elseif ($this->getTestMode()) {
-            return $this->getTestEndpoint();
+            return $this->testEndpoint;
         } else {
-            return $this->getLiveEndpoint();
+            return $this->liveEndpoint;
         }
     }
 
