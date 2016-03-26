@@ -5,4 +5,5 @@ Content-Type: text/xml;charset=utf-8
 Connection: close
 Transfer-Encoding: chunked
 
-<litleOnlineResponse version='9.4' response='1' message='Valid Format' xmlns='http://www.litle.com/schema'></litleOnlineResponse>
+<?xml version="1.0" encoding="UTF-8"?>
+<litleOnlineResponse xmlns="http://www.litle.com/schema" version="9.4" response="1" message="Valid Format" />
