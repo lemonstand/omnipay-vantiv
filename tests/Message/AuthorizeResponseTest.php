@@ -17,6 +17,17 @@ class AuthorizeResponseTest extends TestCase
         $this->assertSame('31186', $response->getAuthCode());
     }
 
+    public function testAuthorizeFailure()
+    {
+        $httpResponse = $this->getMockHttpResponse('AuthorizeRequestFailure.txt');
+        $response = new AuthorizeResponse($this->getMockRequest(), $httpResponse->xml());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertSame('Valid Format', $response->getMessage());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getOrderId());
+        $this->assertNull($response->getAuthCode());
+    }
+
     public function testAuthorizeInsufficentFunds()
     {
         $httpResponse = $this->getMockHttpResponse('AuthorizeRequestInsufficientFunds.txt');

@@ -23,5 +23,8 @@ class PurchaseResponseTest extends TestCase
         $response = new PurchaseResponse($this->getMockRequest(), $httpResponse->xml());
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('Valid Format', $response->getMessage());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getOrderId());
+        $this->assertNull($response->getAuthCode());
     }
 }
