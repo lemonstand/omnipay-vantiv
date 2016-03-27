@@ -15,6 +15,8 @@ class PurchaseResponseTest extends TestCase
         $this->assertSame('110299471', $response->getOrderId());
         $this->assertSame('000', $response->getResponseCode());
         $this->assertSame('72555', $response->getAuthCode());
+        $this->assertSame('00', $response->getAvsResult());
+        $this->assertSame('M', $response->getCardValidationResult());
     }
 
     public function testPurchaseFailure()

@@ -58,7 +58,7 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
             return null;
         }
     }
-    
+
     /**
      * Get the response code
      *
@@ -97,8 +97,8 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
     {
         $element = $this->element;
 
-        if (isset($this->data->$element->litleTxnId->fraudResult->avsResult)) {
-            return ((string) $this->data->$element->litleTxnId->fraudResult->avsResult);
+        if (isset($this->data->$element->fraudResult->avsResult)) {
+            return ((string) $this->data->$element->fraudResult->avsResult);
         }
 
         return null;
@@ -108,8 +108,8 @@ class Response extends \Omnipay\Common\Message\AbstractResponse
     {
         $element = $this->element;
 
-        if (isset($this->data->$element->litleTxnId->fraudResult->cardValidationResult)) {
-            return ((string) $this->data->$element->litleTxnId->fraudResult->cardValidationResult);
+        if (isset($this->data->$element->fraudResult->cardValidationResult)) {
+            return ((string) $this->data->$element->fraudResult->cardValidationResult);
         }
 
         return null;

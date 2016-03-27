@@ -14,5 +14,9 @@ Transfer-Encoding: chunked
         <responseTime>2015-04-17T17:07:21</responseTime>
         <message>Approved</message>
         <authCode>72555</authCode>
+        <fraudResult>
+         <avsResult>00</avsResult>
+         <cardValidationResult>M</cardValidationResult>
+       </fraudResult>
     </saleResponse>
 </litleOnlineResponse>

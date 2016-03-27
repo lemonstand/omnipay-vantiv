@@ -15,6 +15,8 @@ class AuthorizeResponseTest extends TestCase
         $this->assertSame('1', $response->getOrderId());
         $this->assertSame('000', $response->getResponseCode());
         $this->assertSame('31186', $response->getAuthCode());
+        $this->assertSame('00', $response->getAvsResult());
+        $this->assertSame('M', $response->getCardValidationResult());
     }
 
     public function testAuthorizeFailure()
