@@ -165,8 +165,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         if (isset($codes[$brand])) {
             return $codes[$brand];
-        } else {
-            throw new \Exception('Card not supported.');
         }
     }
 
