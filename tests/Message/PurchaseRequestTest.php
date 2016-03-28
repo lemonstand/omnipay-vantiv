@@ -31,6 +31,15 @@ class PurchaseRequestTest extends TestCase
 
     public function testSendError()
     {
+        $this->setMockHttpResponse('NoMessageNoResponseCodeFailure.txt');
+        $response = $this->request->send();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+        $this->assertNull($response->getResponseCode());
+    }
+
+    public function testSendFailure()
+    {
         $this->setMockHttpResponse('PurchaseRequestFailure.txt');
         $response = $this->request->send();
         $this->assertFalse($response->isSuccessful());

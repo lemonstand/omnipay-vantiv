@@ -20,7 +20,7 @@ class AuthorizeRequestTest extends TestCase
         );
     }
 
-    public function testAuthorizeSuccess()
+    public function testSendSuccess()
     {
         $this->setMockHttpResponse('AuthorizeRequestSuccess.txt');
         $response = $this->request->send();
@@ -29,7 +29,16 @@ class AuthorizeRequestTest extends TestCase
         $this->assertSame('Approved', $response->getMessage());
     }
 
-    public function testAuthorizeInsufficentFunds()
+    public function testAuthorizeSendError()
+    {
+        $this->setMockHttpResponse('NoMessageNoResponseCodeFailure.txt');
+        $response = $this->request->send();
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+        $this->assertNull($response->getResponseCode());
+    }
+
+    public function testSendInsufficentFunds()
     {
         $this->setMockHttpResponse('AuthorizeRequestInsufficientFunds.txt');
         $response = $this->request->send();
