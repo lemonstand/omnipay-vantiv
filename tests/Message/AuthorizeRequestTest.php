@@ -92,8 +92,15 @@ class AuthorizeRequestTest extends TestCase
     public function testDataWithCard()
     {
         $card = $this->getValidCard();
-        $this->request->setCard($card);
+        $this->assertSame($this->request, $this->request->setCard($card));
         $data = $this->request->getData();
         $this->assertSame($card['number'], (string) $data->authorization->card->number);
+    }
+
+    public function testDataWithToken()
+    {
+        $this->assertSame($this->request, $this->request->setToken('1234'));
+        $data = $this->request->getData();
+        $this->assertSame('1234', (string) $data->authorization->token->litleToken);
     }
 }

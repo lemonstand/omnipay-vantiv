@@ -91,4 +91,11 @@ class PurchaseRequestTest extends TestCase
         $data = $this->request->getData();
         $this->assertSame($card['number'], (string) $data->sale->card->number);
     }
+
+    public function testDataWithToken()
+    {
+        $this->assertSame($this->request, $this->request->setToken('1234'));
+        $data = $this->request->getData();
+        $this->assertSame('1234', (string) $data->sale->token->litleToken);
+    }
 }
