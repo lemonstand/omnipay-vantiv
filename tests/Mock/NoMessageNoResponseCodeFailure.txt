@@ -1,0 +1,9 @@
+HTTP/1.1 400 Bad Request
+Date: Thu, 16 Apr 2015 23:52:50 GMT
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=utf-8
+Connection: close
+Transfer-Encoding: chunked
+
+<?xml version="1.0" encoding="UTF-8"?>
+<litleOnlineResponse xmlns="http://www.litle.com/schema" version="9.4" />

@@ -27,6 +27,7 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->authorize($this->options);
         $this->assertInstanceOf('Omnipay\Vantiv\Message\AuthorizeRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
+        $this->assertSame('POST', $request->getHttpMethod());
     }
 
     public function testPurchase()
@@ -34,5 +35,6 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->purchase($this->options);
         $this->assertInstanceOf('Omnipay\Vantiv\Message\PurchaseRequest', $request);
         $this->assertSame('10.00', $request->getAmount());
+        $this->assertSame('POST', $request->getHttpMethod());
     }
 }
