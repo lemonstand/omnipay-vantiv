@@ -15,7 +15,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "lemonstand/omnipay-vantiv": "dev-master"
+        "lemonstand/omnipay-vantiv": "~1.0"
     }
 }
 ```
