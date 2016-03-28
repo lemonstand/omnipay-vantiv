@@ -1,6 +1,7 @@
 <?php namespace Omnipay\Vantiv\Message;
 
 use Omnipay\Tests\TestCase;
+use Omnipay\Common\CreditCard;
 
 class AuthorizeRequestTest extends TestCase
 {
@@ -102,5 +103,25 @@ class AuthorizeRequestTest extends TestCase
         $this->assertSame($this->request, $this->request->setToken('1234'));
         $data = $this->request->getData();
         $this->assertSame('1234', (string) $data->authorization->token->litleToken);
+    }
+
+    public function testGetCardType()
+    {
+        $codes = array(
+            CreditCard::BRAND_AMEX        => 'AX',
+            CreditCard::BRAND_DINERS_CLUB => 'DC',
+            CreditCard::BRAND_DISCOVER    => 'DI',
+            CreditCard::BRAND_JCB         => 'JC',
+            CreditCard::BRAND_MASTERCARD  => 'MC',
+            CreditCard::BRAND_VISA        => 'VI'
+        );
+
+        $this->assertSame('VI', $this->request->getCreditType(CreditCard::BRAND_VISA));
+        $this->assertSame('DC', $this->request->getCreditType(CreditCard::BRAND_DINERS_CLUB));
+        $this->assertSame('DI', $this->request->getCreditType(CreditCard::BRAND_DISCOVER));
+        $this->assertSame('JC', $this->request->getCreditType(CreditCard::BRAND_JCB));
+        $this->assertSame('MC', $this->request->getCreditType(CreditCard::BRAND_MASTERCARD));
+        $this->assertSame('AX', $this->request->getCreditType(CreditCard::BRAND_AMEX));
+        $this->assertNull($this->request->getCreditType('NOTIN'));
     }
 }
