@@ -20,6 +20,8 @@ class Gateway extends AbstractGateway
             'merchantId' => '',
             'username' => '',
             'password' => '',
+            'testMode' => false,
+            'preLiveMode' => false,
         );
     }
 
