@@ -18,14 +18,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @var string URL
      */
-    protected $preLiveEndpoint = 'https://transact-prelive.litle.com/vap/communicator/online';
+    protected $preLiveEndpoint = 'https://transact.vantivprelive.com/vap/communicator/online';
 
     /**
      * Live Endpoint URL
      *
      * @var string URL
      */
-    protected $liveEndpoint = 'https://transact.litle.com/vap/communicator/online';
+    protected $liveEndpoint = 'https://transact.vantivcnp.com/vap/communicator/online';
 
     public function getMerchantId()
     {

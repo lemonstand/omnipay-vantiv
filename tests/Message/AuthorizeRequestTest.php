@@ -68,7 +68,7 @@ class AuthorizeRequestTest extends TestCase
     public function testGetPreliveEndpoint()
     {
         $this->assertSame($this->request, $this->request->setPreLiveMode(true));
-        $this->assertSame('https://transact-prelive.litle.com/vap/communicator/online', $this->request->getEndpoint());
+        $this->assertSame('https://transact.vantivprelive.com/vap/communicator/online', $this->request->getEndpoint());
     }
 
     public function testTestEndpoint()
@@ -81,12 +81,12 @@ class AuthorizeRequestTest extends TestCase
     {
         $this->assertSame($this->request, $this->request->setPreLiveMode(true));
         $this->assertSame($this->request, $this->request->setTestMode(true));
-        $this->assertSame('https://transact-prelive.litle.com/vap/communicator/online', $this->request->getEndpoint());
+        $this->assertSame('https://transact.vantivprelive.com/vap/communicator/online', $this->request->getEndpoint());
     }
 
     public function testLiveEndpoint()
     {
-        $this->assertSame('https://transact.litle.com/vap/communicator/online', $this->request->getEndpoint());
+        $this->assertSame('https://transact.vantivcnp.com/vap/communicator/online', $this->request->getEndpoint());
     }
 
     /**
